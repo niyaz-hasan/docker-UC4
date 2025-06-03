@@ -13,14 +13,21 @@ module "alb" {
   tg_arns     = [module.target_group.arn]
 }
 
+#module "target_group" {
+#  source      = "./modules/target_group"
+#  name        = "target-group"
+#  port        = 80
+#  vpc_id      = module.vpc.vpc_id
+#  path        = "/"
+#}
+
 module "target_group" {
   source      = "./modules/target_group"
   name        = "target-group"
-  port        = 80
+  port        = 4000
   vpc_id      = module.vpc.vpc_id
   path        = "/"
 }
-
 
 
 module "sg_group" {

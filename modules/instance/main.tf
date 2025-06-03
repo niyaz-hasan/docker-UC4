@@ -12,5 +12,5 @@ resource "aws_instance" "this" {
 resource "aws_lb_target_group_attachment" "this" {
   target_group_arn = var.tg_arn
   target_id        = aws_instance.this.id
-  port             = 80
+  port             = 4000
 }
