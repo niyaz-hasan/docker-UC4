@@ -34,15 +34,15 @@ locals {
   user_data = <<-EOF
          #!/bin/bash
          sudo dnf update -y
-         sudo dnf install -y docker
+         sudo dnf install -y docker git 
+         sudo dnf install -y libxcrypt-compat
          sudo systemctl enable docker
          sudo systemctl start docker
          sudo usermod -aG docker ec2-user
          sleep 10
          # Install Docker Compose
-         curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-\$(uname -s)-\$(uname -m)" \
-         -o /usr/local/bin/docker-compose
-         chmod +x /usr/local/bin/docker-compose
+         sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+         sudo chmod +x /usr/local/bin/docker-compose
          
          # Clone working DevLake repo with UI support
          cd /home/ec2-user
