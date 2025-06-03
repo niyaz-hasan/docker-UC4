@@ -57,6 +57,7 @@ locals {
          
          # Run Docker Compose
          docker-compose up -d
+         sleep 40
     EOF
 }
 
