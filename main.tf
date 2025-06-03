@@ -39,7 +39,24 @@ locals {
          sudo systemctl start docker
          sudo usermod -aG docker ec2-user
          sleep 10
-         docker run -d -p 80:80 apache/devlake
+         # Install Docker Compose
+         curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-\$(uname -s)-\$(uname -m)" \
+         -o /usr/local/bin/docker-compose
+         chmod +x /usr/local/bin/docker-compose
+         
+         # Clone working DevLake repo with UI support
+         cd /home/ec2-user
+         git clone https://github.com/merico-dev/lake.git devlake-setup
+         cd devlake-setup
+         cp -arp devops/releases/lake-v0.21.0/docker-compose.yml ./
+         
+         
+         # Set up .env file
+         cp env.example .env
+         echo "ENCRYPTION_SECRET=super-secret-123" >> .env
+         
+         # Run Docker Compose
+         docker-compose up -d
     EOF
 }
 
